@@ -1,5 +1,8 @@
 import { counter } from ".";
-import ENV from "../../config";
+
+const ENV = {
+    seperator:":",
+}
 
 const generateReturn = (
     template: string,
