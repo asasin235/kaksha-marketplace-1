@@ -1,6 +1,6 @@
 const Product=require(".../models/Product");
 
-exports.DeleteProduct=async(req,res)=>{
+exports.DeleteProductData=async(req,res)=>{
     try{
         const {id}=req.body;
         const product=await Product.findByIdAndUpdate(id,{isDeleted:true})
