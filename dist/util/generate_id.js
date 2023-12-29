@@ -1,9 +1,7 @@
 // import { counter } from ".";
-
 // const ENV = {
 //     seperator:":",
 // }
-
 // const generateReturn = (
 //     template: string,
 //     id,

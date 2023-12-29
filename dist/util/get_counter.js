@@ -1,5 +1,4 @@
 // import { Counter } from "../models/main";
-
 // export const counter = async (id, count = 1) => {
 //     return Counter.findOneAndUpdate(
 //         {
