@@ -1,16 +1,8 @@
-import { Product } from "../../models/products";
+import { Product, IProduct } from "../../models/products";
 
 const addProduct = async(req, res) => {
     try{
-        interface RequestBody{
-            productName: string,
-            price: number,
-            category: string,
-            classes: object,
-            metadata: object,
-        };
-
-        const { productName, price, category, classes, metadata }: RequestBody = req.body;
+        const { productName, price, category, classes, metadata }: IProduct = req.body;
 
         if (!productName || !price || !category){
             return res.status(400).json('ProductName, Price and Category fields are required.');
@@ -31,6 +23,13 @@ const addProduct = async(req, res) => {
         return res.status(201).json({ productId: product.id, message: 'New Product created successfully.' });
     } catch(err){
         console.log(err);
+
+        if (err.name === 'ValidationError') {
+            // Mongoose validation error
+            const validationErrors = Object.values(err.errors).map((error: any) => error.message);
+            return res.status(400).json({ error: 'Validation error', details: validationErrors });
+        }
+
         res.status(500).json('Internal Server Error');
     };
 };

@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const products_1 = require("../../models/products");
 const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        ;
         const { productName, price, category, classes, metadata } = req.body;
         if (!productName || !price || !category) {
             return res.status(400).json('ProductName, Price and Category fields are required.');
@@ -31,6 +30,11 @@ const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
     catch (err) {
         console.log(err);
+        if (err.name === 'ValidationError') {
+            // Mongoose validation error
+            const validationErrors = Object.values(err.errors).map((error) => error.message);
+            return res.status(400).json({ error: 'Validation error', details: validationErrors });
+        }
         res.status(500).json('Internal Server Error');
     }
     ;
