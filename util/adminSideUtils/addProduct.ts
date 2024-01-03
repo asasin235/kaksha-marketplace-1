@@ -1,11 +1,12 @@
+import { Request, Response } from 'express';
 import { Product, IProduct } from "../../models/products";
 
-const addProduct = async(req, res) => {
+const addProduct = async(req: Request, res: Response) => {
     try{
-        const { productName, price, category, classes, metadata }: IProduct = req.body;
+        const { productName, price, category, classes, metadata, organization }: IProduct = req.body;
 
-        if (!productName || !price || !category){
-            return res.status(400).json('ProductName, Price and Category fields are required.');
+        if (!productName || !price || !category || !organization){
+            return res.status(400).json('ProductName, Price, Category and Organization fields are required.');
         }
 
         const product = await Product.create({
@@ -13,7 +14,8 @@ const addProduct = async(req, res) => {
             price,
             category,
             classes,
-            metadata
+            metadata,
+            organization,
         });
 
         if (!product){
