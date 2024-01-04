@@ -1,4 +1,4 @@
-import mongoose, { Schema, model, connection } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
@@ -11,13 +11,14 @@ export interface IProduct {
     metadata: object;
     classes:object;
     isDeleted: boolean;
+    organization: string;
+    description: string; // Can be an object Later
 }
 
 const productSchema = new Schema<IProduct>(
     {
         productId: {
             type: Number,
-            required: true,
             unique: true
         },
         productName: {
@@ -44,7 +45,17 @@ const productSchema = new Schema<IProduct>(
             type: Boolean,
             default: false,
         },
+        organization: {
+            type: String,
+            required: true,
+        },
+        description: {
+            type: String,
+            required: false,
+        },
 
+    },{
+        timestamps:true,
     }
 );
 
