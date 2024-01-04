@@ -17,12 +17,6 @@ app.listen(port, () => {
 });
 
 
-/*
-// Path: server.ts
-read_user
-kaksha-live
- */
-
 
 /*
 // Path: server.ts
