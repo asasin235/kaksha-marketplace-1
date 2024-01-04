@@ -19,7 +19,6 @@ const productSchema = new Schema<IProduct>(
     {
         productId: {
             type: Number,
-            required: true,
             unique: true
         },
         productName: {
