@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { Product, IProduct } from "../../models/products";
 
-const addProduct = async(req: Request, res: Response) => {
+export const addProduct = async(req: Request, res: Response) => {
     try{
-        const { productName, price, category, classes, metadata, organization }: IProduct = req.body;
+        const { productName, price, category, classes, metadata, organization, description }: IProduct = req.body;
 
         if (!productName || !price || !category || !organization){
             return res.status(400).json('ProductName, Price, Category and Organization fields are required.');
@@ -16,6 +16,7 @@ const addProduct = async(req: Request, res: Response) => {
             classes,
             metadata,
             organization,
+            description,
         });
 
         if (!product){
@@ -35,5 +36,3 @@ const addProduct = async(req: Request, res: Response) => {
         res.status(500).json('Internal Server Error');
     };
 };
-
-export default addProduct;
