@@ -1,12 +1,15 @@
 import { Request, Response } from 'express';
 import { Product, IProduct } from '../models/products';
+import { showAllProducts } from '../util/adminSideUtils/showAllProduct';
 
 // Controller to get all products
 export const getAllProducts = async (req: Request, res: Response) => {
   try {
-    const products = await Product.find({ isDeleted: false });
-    res.json(products);
-  } catch (error) {
+    // Fetch products from the database and use the util function to exclude descriptions
+    const product = showAllProducts(await Product.find({ isDeleted: false }).exec());
+    res.json(product);
+  } 
+  catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };

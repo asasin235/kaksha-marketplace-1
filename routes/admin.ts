@@ -3,7 +3,7 @@ const router = express.Router();
 const {
   getAllProducts,
   getProductById,
-  createProduct,
+  addProduct,
   updateProduct,
   deleteProduct,
 } = require('../controller/admin');
