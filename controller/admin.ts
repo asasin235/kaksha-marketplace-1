@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { Product, IProduct } from '../models/products';
-import { showAllProducts } from '../util/adminSideUtils/showAllProduct';
+import { addProduct } from '../util/adminSideUtils/addProduct';
+
 
 // Controller to get all products
 export const getAllProducts = async (req: Request, res: Response) => {
@@ -32,15 +33,8 @@ export const getProductById = async (req: Request, res: Response) => {
 };
 
 // Controller to create a new product
-export const addProduct = async (req: Request, res: Response) => {
-  const productData: IProduct = req.body;
-
-  try {
-    const newProduct = await Product.create(productData);
-    res.status(201).json(newProduct);
-  } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
+export const createProduct = async (req: Request, res: Response) => {
+  addProduct(req, res);
 };
 
 // Controller to update a product by ID

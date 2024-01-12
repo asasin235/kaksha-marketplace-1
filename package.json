@@ -15,6 +15,9 @@
         "@my_module": "lib/some-file.js",
         "something": "src/foo"
     },
+    
+     
+    
     "dependencies": {
         "@faker-js/faker": "^7.4.0",
         "@sentry/node": "^7.47.0",

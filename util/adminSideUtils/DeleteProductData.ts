@@ -1,4 +1,4 @@
-const Product=require(".../models/Product");
+import { Product } from "../../models/products";
 
 exports.DeleteProductData=async(req,res)=>{
     try{
