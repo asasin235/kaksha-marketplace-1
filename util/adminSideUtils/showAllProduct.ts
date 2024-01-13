@@ -1,8 +1,18 @@
-import { IProduct } from '../../models/products';
+import { Product } from "../../models/products";
 
-export function showAllProducts(products: IProduct[]): Omit<IProduct, 'description'>[] {
-    return products.map(product => {
-        const { description, ...productWithoutDescription } = product;
-        return productWithoutDescription as Omit<IProduct, 'description'>;
-    });
+export const ShowAllProduct=async(req,res)=>{
+    try{
+        const {categoryName}=req.body;
+        const category=await Product.findOne({category:`${categoryName}/`});
+        const categoryId=category["categoryId"];
+        const response=await Product.find({categoryId:categoryId});
+
+        res.status(200).json({
+            message:"Finded Successfully",
+            data:response
+        })
+    }
+    catch(err){
+        console.log(err);
+    }
 }

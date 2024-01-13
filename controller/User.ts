@@ -1,12 +1,13 @@
 const {Request, Response} = require('express');
 const{AddToCart} = require('../services/userServices');
+import { IGetUserAuthInfoRequest } from "../definitonFile"
 
-export const addToCart = async (req: Request, res: Response) => {
+export const addToCart = async (req: IGetUserAuthInfoRequest, res: Response) => {
     try {
-        const {productId, quantity, price, productName, productImage} = req.body;
-        const {userId} = req.userId;
+        const {productId, quantity, price, productName, productImage} = req.body[0];
+        const userId = req.userId;
         await AddToCart(userId, productId, quantity, price, productName, productImage);
-        return res.status(200).json({message: 'Product added to cart successfully'});
+        return res.json();
 
     }catch (e) {
         console.log(e);
