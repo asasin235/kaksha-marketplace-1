@@ -1,5 +1,6 @@
 const {Request, Response} = require('express');
 const{AddToCart} = require('../services/userServices');
+
 import { IGetUserAuthInfoRequest } from "../definitonFile"
 
 export const addToCart = async (req: IGetUserAuthInfoRequest, res: Response) => {
