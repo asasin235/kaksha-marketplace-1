@@ -3,14 +3,11 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import { connDB } from "./config/db";
-import addProduct from "./util/adminSideUtils/addProduct";
+import AdminRouter from './routes/admin';
+import UserRouter from './routes/user';
 
 const app = express();
-const router = express.Router();
 const port = 3000;
-
-const admin_routes = require("./routes/admin")
-
 
 // TODO: Connect DB
 connDB();
@@ -18,19 +15,16 @@ connDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-router.get('/', (req, res) => {
+app.get('/', (req, res) => {
   res.send('Hello, world!');
 });
-
-router.post('/addProduct', addProduct);
-
-app.use(router);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-app.use("/api/admin",admin_routes);
+app.use("/api/admin", AdminRouter);
+app.use("/api", UserRouter);
 /*
 // Path: server.ts
 read_user
