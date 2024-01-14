@@ -1,45 +1,69 @@
-import mongoose, { Schema, model } from "mongoose";
+// product.model.ts
 
-const AutoIncrement = require('mongoose-sequence')(mongoose);
+import mongoose, { Schema, model, Document } from "mongoose";
+import AutoIncrement from "mongoose-sequence";
 
+import { ICategory } from "./category";
 
-export interface IProduct {
+interface IOtherImageUrl {
+    url: string;
+    description?: string;
+}
+
+export interface IProduct extends Document {
     productId: number;
     productName: string;
     price: number;
-    category: string;
+    category: ICategory["_id"];
+    imageUrl: string;
+    otherImageUrl: IOtherImageUrl;
     metadata: object;
-    classes:object;
+    classes: object;
     isDeleted: boolean;
     organization: string;
-    description: string; // Can be an object Later
+    description: string;
 }
 
 const productSchema = new Schema<IProduct>(
     {
         productId: {
             type: Number,
-            unique: true
+            unique: true,
         },
         productName: {
             type: String,
-            required: true
+            required: true,
         },
-        price:{
-            type:Number,
-            required:true
+        price: {
+            type: Number,
+            required: true,
         },
-        category:{
-            type:String,
-            required:true
+        category: {
+            type: Schema.Types.ObjectId,
+            ref: "Category",
+            required: true,
         },
-        classes:{
-            type:Object,
-            required:false
+        imageUrl: {
+            type: String,
+            required: true,
+        },
+        otherImageUrl: {
+            url: {
+                type: String,
+                required: true,
+            },
+            description: {
+                type: String,
+                required: false,
+            },
+        },
+        classes: {
+            type: Object,
+            required: false,
         },
         metadata: {
             type: Object,
-            required: false
+            required: false,
         },
         isDeleted: {
             type: Boolean,
@@ -53,12 +77,12 @@ const productSchema = new Schema<IProduct>(
             type: String,
             required: false,
         },
-
-    },{
-        timestamps:true,
+    },
+    {
+        timestamps: true,
     }
 );
 
-productSchema.plugin(AutoIncrement, { inc_field: 'productId' });
+productSchema.plugin(AutoIncrement, { inc_field: "productId" });
 
-export const Product = model("Product", productSchema);
+export const Product = model<IProduct>("Product", productSchema);
