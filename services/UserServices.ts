@@ -1,5 +1,5 @@
 import client from "../config/redis";
-import { Cart } from "../models/Cart";
+import { Cart } from "../models/cart";
 const getRedisKey = (userId) => {
     return `cart:${userId}`;
 }
@@ -28,5 +28,20 @@ export const AddToCart = async (userId="111", productId, quantity, price, produc
        // console.log(key,cartItemString);
     } catch (e) {
         console.log(e);
+    }
+}
+
+// Function to clear the user's cart
+export const clearUserCart = async (userId) => {
+    try {
+        await client.connect();
+        const key = getRedisKey(userId);
+
+        // Remove all items from the cart in Redis
+        await client.del(key);
+        console.log("Cart cleared successfully");
+        await client.quit();
+    } catch (e) {
+        console.error(e);
     }
 }

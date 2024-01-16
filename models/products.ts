@@ -1,7 +1,7 @@
 // product.model.ts
 
 import mongoose, { Schema, model, Document } from "mongoose";
-import AutoIncrement from "mongoose-sequence";
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 import { ICategory } from "./category";
 
